@@ -21,7 +21,7 @@ var chain = hlc.newChain("CP_chain");
 // as so it is important to secure this storage.
 // The FileKeyValStore is a simple file-based KeyValStore, but you
 // can easily implement your own to store whereever you want.
-chain.setKeyValStore( hlc.newFileKeyValStore('/tmp/keyValStore1') );
+chain.setKeyValStore( hlc.newFileKeyValStore('/tmp/keyValStore') );
 
 // Set the URL for member services
 chain.setMemberServicesUrl("grpc://ajp-ca.rtp.raleigh.ibm.com:50051");
@@ -45,9 +45,10 @@ chain.enroll("WebAppAdmin", "DJY27pEnl16d", function(err, webAppAdmin) {
    chain.setRegistrar(webAppAdmin);
    // Now begin listening for web app requests
 	var deploy_request={
-		chaincodeID: 'test_newsdk/',
+		chaincodeID: 'CP_Chain',
 		fcn: 'init',
-		args: []
+		args: [],
+		chaincodePath: 'test_newsdk/'
 	}
 	webAppAdmin.deploy(deploy_request)
    //listenForUserRequests();
@@ -72,6 +73,10 @@ function listenForUserRequests() {
 	}
 	usr1 = new Member('any', chain)
 	usr1.deploy(deploy_request)*/
+	userName = 'shp';
+	chaincodeID = 'CP_Chain';
+	fcn = 'invoke'
+	args = []
 	handleUserRequest(userName,chaincodeID,fcn,args);
    }
 }
